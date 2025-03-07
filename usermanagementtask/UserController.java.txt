@@ -1,0 +1,47 @@
+package com.example.controller;
+	import com.example.model.User;
+	import com.example.service.UserService;
+	import org.springframework.web.bind.annotation.*;
+	import java.util.List;
+	import java.util.Optional;
+	import java.util.UUID;
+
+	@RestController
+	@RequestMapping("/api")
+	public class UserController {
+	    private final UserService userService;
+
+	    public UserController(UserService userService) {
+	        this.userService = userService;
+	    }
+
+	    @PostMapping("/create_user")
+	    public User createUser(@RequestBody User user) {
+	        return userService.createUser(user);
+	    }
+
+	    @GetMapping("/get_users")
+	    public List<User> getUsers() {
+	        return userService.getUsers();
+	    }
+
+	    @DeleteMapping("/delete_user/{userId}")
+	    public void deleteUser(@PathVariable String userId) {
+	        userService.deleteUser(userId);
+	    }
+
+	    @PutMapping("/update_user/{userId}")
+	    public User updateUser(@PathVariable String userId, @RequestBody User userDetails) {
+	        Optional<User> existingUser = userService.getUserById(userId);
+	        if (existingUser.isPresent()) {
+	            User user = existingUser.get();
+	            user.setFullName(userDetails.getFullName());
+	            user.setMobNum(userDetails.getMobNum());
+	            user.setPanNum(userDetails.getPanNum());
+	            return userService.createUser(user);
+	        }
+	        return null;
+	    }
+	}
+
+

@@ -1,0 +1,44 @@
+package com.example.service;
+	import com.example.model.User;
+	import com.example.repo.UserRepo;
+
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.data.repository.CrudRepository;
+	import org.springframework.data.repository.ListCrudRepository;
+	import org.springframework.stereotype.Service;
+	import java.util.List;
+	import java.util.Optional;
+	//import java.util.UUID;
+		@Service
+		public class UserService {
+			@Autowired
+		    private final UserRepo userRepository;
+
+		    public UserService(UserRepo userRepo) {
+		        this.userRepository = userRepo;
+		    }
+
+		    @SuppressWarnings("unchecked")
+			public User createUser(User user) {
+		        return ((CrudRepository<User, String>) userRepository).save(user);
+		    }
+
+		    @SuppressWarnings("unchecked")
+			public List<User> getUsers() {
+		        return ((ListCrudRepository<User, String>) userRepository).findAll();
+		    }
+
+		    @SuppressWarnings("unchecked")
+			public Optional<User> getUserById(String userId) {
+		        return ((CrudRepository<User, String>) userRepository).findById(userId);
+		    }
+
+		    @SuppressWarnings("unchecked")
+			public void deleteUser(String userId) {
+		        ((CrudRepository<User, String>) userRepository).deleteById(userId);
+		    }
+		}
+
+
+
+

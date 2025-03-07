@@ -1,0 +1,12 @@
+package com.example.repo;
+
+//import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.model.Manager;
+
+public interface ManagerRepo {
+	public interface ManagerRepository extends JpaRepository<Manager, String> {
+	}
+}
